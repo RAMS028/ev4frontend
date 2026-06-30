@@ -3,6 +3,7 @@ import Form from './components/Form';
 import List from './components/List';
 import Item from './components/Item';
 import './index.css';
+import './App.css';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -44,6 +45,7 @@ function App() {
   return (
     <div className="App">
       <h1>CRUD con LocalStorage</h1>
+      <h1> Certamen 4 Front End </h1>
 
       <Form
         addOrUpdateItem={addOrUpdateItem}
