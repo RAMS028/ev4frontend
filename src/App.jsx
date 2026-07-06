@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Form from './components/Form';
 import List from './components/List';
-import Item from './components/Item';
 import './index.css';
 import './App.css';
 
@@ -35,7 +34,10 @@ function App() {
   };
 
   const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+    const confirmado = window.confirm('¿Seguro que quieres eliminar este elemento?');
+    if (confirmado) {
+      setItems(items.filter((item) => item.id !== id));
+    }
   };
 
   const editItem = (item) => {
@@ -57,6 +59,8 @@ function App() {
         deleteItem={deleteItem}
         editItem={editItem}
       />
+
+      <p className="counter-text">Total: {items.length}</p>
     </div>
   );
 }
