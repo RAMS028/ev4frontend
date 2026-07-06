@@ -137,3 +137,54 @@ body {
   color: #6b7280;
   font-weight: 600;
 }
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.item-checkbox {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.item.completed .item-text {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.list-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.btn-delete-all {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #6b7280;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-delete-all:hover {
+  opacity: 0.85;
+}

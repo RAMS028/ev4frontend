@@ -5,14 +5,16 @@ import './index.css';
 import './App.css';
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('items'));
+      return Array.isArray(stored) ? stored : [];
+    } catch {
+      return [];
+    }
+  });
   const [itemToEdit, setItemToEdit] = useState(null);
-
-  useEffect(() => {
-    const storedItems =
-      JSON.parse(localStorage.getItem('items')) || [];
-    setItems(storedItems);
-  }, []);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
@@ -29,7 +31,7 @@ function App() {
       );
       setItemToEdit(null);
     } else {
-      setItems([...items, { id: Date.now(), value }]);
+      setItems([...items, { id: Date.now(), value, completed: false }]);
     }
   };
 
@@ -44,6 +46,26 @@ function App() {
     setItemToEdit(item);
   };
 
+  const toggleComplete = (id) => {
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
+      )
+    );
+  };
+
+  const deleteAll = () => {
+    if (items.length === 0) return;
+    const confirmado = window.confirm('¿Seguro que quieres eliminar TODOS los elementos?');
+    if (confirmado) {
+      setItems([]);
+    }
+  };
+
+  const filteredItems = items.filter((item) =>
+    item.value.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="App">
       <h1>CRUD con LocalStorage</h1>
@@ -54,13 +76,27 @@ function App() {
         itemToEdit={itemToEdit}
       />
 
-      <List
-        items={items}
-        deleteItem={deleteItem}
-        editItem={editItem}
+      <input
+        className="search-input"
+        type="text"
+        placeholder="Buscar..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <p className="counter-text">Total: {items.length}</p>
+      <List
+        items={filteredItems}
+        deleteItem={deleteItem}
+        editItem={editItem}
+        toggleComplete={toggleComplete}
+      />
+
+      <div className="list-footer">
+        <p className="counter-text">Total: {items.length}</p>
+        <button className="btn-delete-all" onClick={deleteAll}>
+          Borrar todo
+        </button>
+      </div>
     </div>
   );
 }
